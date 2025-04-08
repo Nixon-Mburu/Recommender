@@ -13,18 +13,13 @@ recommender/
 backend/recommender/
 **/recommender/
 
-# Database files
-*.db
-*.sqlite
-*.sqlite3
-
 # Logs and local files
 *.log
 .DS_Store
 .idea/
 .vscode/
 
-# Distribution/packaging
+
 dist/
 build/
 *.egg-info/
