@@ -1,0 +1,120 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+.env
+.venv
+venv/
+ENV/
+site-packages/
+recommender/
+backend/recommender/
+**/recommender/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs and local files
+*.log
+.DS_Store
+.idea/
+.vscode/
+
+# Distribution/packaging
+dist/
+build/
+*.egg-info/
+
+# Model files and large data
+*.pkl
+*.h5
+*.model
+*.bin
+*.pth
+*.pt
+data/raw/
+models/trained/
+
+# Dependencies
+node_modules/
+
+# Large files
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+*.rar
+
+# Media files
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.flv
+*.mkv
+*.mp3
+*.wav
+*.flac
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.tiff
+*.psd
+
+# Large datasets
+*.csv
+*.json
+*.xml
+*.xlsx
+*.xls
+*.parquet
+*.feather
+*.npz
+*.npy
+*.hdf5
+*.h5
+*.dat
+*.tsv
+*.arrow
+*.pickle
+
+# Backup files
+*~
+*.bak
+*.swp
+*.swo
+*.tmp
+
+# Backend specific
+backend/__pycache__/
+backend/models/
+backend/*.csv
+backend/ml-100k/
+backend/*.png
+
+# Strict size blocking
+*.[0-9][0-9][0-9]mb
+*.[0-9]gb
+*.[0-9][0-9]gb
+
+# Additional large file patterns
+*.dump
+*.dmp
+*.large
+*-large
+*.weights
+**/large/*
+**/weights/*
+**/checkpoints/*
+**/artifacts/*
+
+# Temporary and cache directories
+tmp/
+temp/
+.cache/
