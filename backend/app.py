@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 import joblib
 from pathlib import Path
-from model import EnhancedRecommenderNN, predict_rating  # Remove get_movie_recommendations
+from model import EnhancedRecommenderNN, predict_rating    
 import os
 import requests
 from dotenv import load_dotenv
