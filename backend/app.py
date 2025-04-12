@@ -6,10 +6,19 @@ import torch
 import numpy as np
 import pandas as pd
 import joblib
+import requests  # Add this import
 from pathlib import Path
-from model import EnhancedRecommenderNN, predict_rating    
 import os
-import requests
+import sys
+
+# Add the backend directory to Python path
+backend_dir = Path(__file__).resolve().parent
+if str(backend_dir) not in sys.path:
+    sys.path.append(str(backend_dir))
+
+# Update imports
+from model import EnhancedRecommenderNN, predict_rating
+
 from dotenv import load_dotenv
 
 # Define device
@@ -38,33 +47,55 @@ ALL_GENRES = [
 OMDB_API_KEY = os.getenv('OMDB_API_KEY')
 OMDB_BASE_URL = 'http://www.omdbapi.com/'  
 
+# Validate OMDB API key
+if not OMDB_API_KEY:
+    logger.error("OMDB_API_KEY not found in environment variables")
+    raise ValueError("OMDB_API_KEY is required")
+
 def search_movies_omdb(query, year_from=None, year_to=None):
     try:
+        if not query:
+            return []
+            
         all_results = []
-        # If no query is provided, use some popular keywords
         search_terms = [query] if query else ['action', 'adventure', 'drama']
         
         for term in search_terms:
-            # Search through the year range
-            current_year = year_from
-            while current_year <= (year_to or year_from or 2023):
+            # Validate year range
+            current_year = int(year_from) if year_from else 2023
+            end_year = int(year_to) if year_to else current_year
+            
+            while current_year <= end_year:
                 params = {
                     'apikey': OMDB_API_KEY,
                     's': term,
                     'y': str(current_year),
                     'type': 'movie'
                 }
-                response = requests.get(OMDB_BASE_URL, params=params)
-                if response.status_code == 200:
+                
+                try:
+                    response = requests.get(OMDB_BASE_URL, params=params, timeout=10)
+                    response.raise_for_status()  
                     data = response.json()
+                    
                     if data.get('Response') == 'True':
                         all_results.extend(data.get('Search', []))
+                    elif data.get('Error') == 'Invalid API key!':
+                        logger.error("Invalid OMDB API key")
+                        raise ValueError("Invalid OMDB API key")
+                        
+                except requests.RequestException as e:
+                    logger.error(f"OMDB API request failed: {str(e)}")
+                    break
+                    
                 current_year += 1
-                if len(all_results) >= 50:  # Limit total results
+                if len(all_results) >= 50:
                     break
             if len(all_results) >= 50:
                 break
+                
         return all_results
+        
     except Exception as e:
         logger.error(f"OMDB search error: {str(e)}")
         return []
