@@ -115,8 +115,7 @@ def create_data_loaders(X_processed, y, batch_size=64, use_sampler=True):
         class_weights = 1. / class_counts
         weights = class_weights[y_train_rounded]
         sampler = WeightedRandomSampler(weights=weights, num_samples=len(weights), replacement=True)
-        shuffle = False  # Don't shuffle when using sampler
-    else:
+        shuffle = False  
         sampler = None
         shuffle = True
     
