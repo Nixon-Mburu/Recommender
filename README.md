@@ -10,7 +10,8 @@ This Project is a Web Application that works with a Simple Neural Network Model 
 
 1. Clone the repository
 ```bash
-git clone https://https://github.com/Nixon-Mburu/Recommender
+git clone https://https://github.com/Nixon-Mburu/Recommender.git
+
 cd recommender
 ```
 
